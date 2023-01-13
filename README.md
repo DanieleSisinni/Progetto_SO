@@ -14,11 +14,11 @@ Le caratteristiche della cella di cui sopra sono generate casualmente all’atto
 
 
 1.2 Richieste di servizio taxi
-   Le richieste di taxi sono originate da SO_SOURCES processi dedicati. Ognuno di essi `e legato ad una cella della mappa da cui la richiesta si genera. Ogni          richiesta di servizio taxi `e caratterizzata da:
-      • la cella di partenza (la cella fra le SO_SOURCES ove la richiesta `e generata);
+   Le richieste di taxi sono originate da SO_SOURCES processi dedicati. Ognuno di essi è legato ad una cella della mappa da cui la richiesta si genera. Ogni          richiesta di servizio taxi è caratterizzata da:
+      • la cella di partenza (la cella fra le SO_SOURCES ove la richiesta è generata);
       • la cella di destinazione determinata in modo casuale fra una qualunque delle celle della mappa tra quelle accessibili, diversa da quella di partenza.
    Le celle SO_SOURCES di origine delle richieste sono posizionate casualmente sulla mappa senza sovrapposizione.
-   Le richieste originatesi in ognuna delle SO_SOURCES sorgenti sono generate da SO_SOURCES processi che immettono tali richieste in una coda di messaggi oppure una    pipe (la scelta se avere una singola coda/pipe o una diversa per ogni sorgente `e libera). I processi taxi prelevano le richieste, e le richieste possono essere    servite soltanto da un taxi che si trova nella cella di origine della richiesta.
+   Le richieste originatesi in ognuna delle SO_SOURCES sorgenti sono generate da SO_SOURCES processi che immettono tali richieste in una coda di messaggi oppure una    pipe (la scelta se avere una singola coda/pipe o una diversa per ogni sorgente è libera). I processi taxi prelevano le richieste, e le richieste possono essere    servite soltanto da un taxi che si trova nella cella di origine della richiesta.
    Le richieste sono create da SO_SOURCES processi secondo un pattern configurabile a propria scelta, per esempio attraverso un alarm periodico oppure con un          intervallo variabile. Inoltre, ognuno degli SO_SOURCES processi deputati alla generazione di richieste deve generare una richiesta ogni volta che riceve un          segnale (a scelta dello sviluppatore), per esempio da terminale.
    
 1.3 Movimento dei taxi
@@ -27,28 +27,28 @@ Le caratteristiche della cella di cui sopra sono generate casualmente all’atto
   Situazione di stallo Se un taxi non si muove entro SO_TIMEOUT secondi termina rilasciando eventuali risorse possedute. Se stava effettuando una corsa per un         cliente, la richiesta viene marcata come “aborted” e quindi eliminata. Quando un processo taxi termina a causa del timeout, allora un nuovo processo taxi viene     creato in una posizione casuale.
   
 1.4 Inizio e terminazione della simulazione
-  La simulazione si avvia dopo che tutti i processi sorgente e processi taxi sono stati creati e inizializzati. Dal momento dell’avvio, la simulazione ha una durata   SO_DURATION secondi che sar`a un alarm per il processo master.
+  La simulazione si avvia dopo che tutti i processi sorgente e processi taxi sono stati creati e inizializzati. Dal momento dell’avvio, la simulazione ha una durata   SO_DURATION secondi che sarà un alarm per il processo master.
 
 
 1.5 Stampa
   E presente un processo “master” che raccoglie le statistiche delle varie richieste eseguite. Ogni secondo viene stampato a terminale lo stato di occupazione delle   varie celle.
   Alla fine della simulazione vengono stampati:
       • numero viaggi (eseguiti con successo, inevasi e abortiti)
-      • la mappa con evidenziate le SO_SOURCES sorgenti e le SO_TOP_CELLS celle pi`u attraversate
+      • la mappa con evidenziate le SO_SOURCES sorgenti e le SO_TOP_CELLS celle più attraversate
       • il processo taxi che
-          1. ha fatto pi`u strada (numero di celle) di tutti
-          2. ha fatto il viaggio pi`u lungo (come tempo) nel servire una richiesta
-          3. ha raccolto pi`u richieste/clienti
+          1. ha fatto più strada (numero di celle) di tutti
+          2. ha fatto il viaggio più lungo (come tempo) nel servire una richiesta
+          3. ha raccolto più richieste/clienti
           
 2 Configurazione
   I seguenti parametri sono letti a tempo di esecuzione, da file, da variabili di ambiente, o da stdin (a discrezione degli studenti):
       • SO_TAXI, numero di taxi presenti
       • SO_SOURCES, numero di punti sulla mappa di origine dei clienti (si immagini che siano le stazioni, gli aereoporti, etc.)
-      • SO_HOLES, numero di celle della mappa inaccessibili. Si ricordi: ogni cella inaccessibile non pu`o averne altre nelle otto celle che la circondano
+      • SO_HOLES, numero di celle della mappa inaccessibili. Si ricordi: ogni cella inaccessibile non può averne altre nelle otto celle che la circondano
       • SO_TOP_CELLS, numero di celle maggiormente attraversate
-      • SO_CAP_MIN, SO_CAP_MAX, capacit`a minima e massima di ogni cella
+      • SO_CAP_MIN, SO_CAP_MAX, capacità minima e massima di ogni cella
       • SO_TIMENSEC_MIN, SO_TIMENSEC_MAX, tempo minimo e massimo necessario per l’attraversamento di ogni cella (in nanosecondi).
-      • SO_TIMEOUT, tempo di inattivit`a del taxi dopo il quale il taxi muore
+      • SO_TIMEOUT, tempo di inattività del taxi dopo il quale il taxi muore
       • SO_DURATION, durata della simulazione
 
   Un cambiamento dei precedenti parametri non deve determinare una nuova compilazione dei sorgenti.
@@ -56,7 +56,7 @@ Le caratteristiche della cella di cui sopra sono generate casualmente all’atto
       • SO_WIDTH, larghezza della mappa;
       • SO_HEIGHT, altezza della mappa.
       
-  La Tabella 1 elenca valori “dense” e “large” per alcune configurazione di esempio da testare. Si tenga presente che il progetto deve poter funzionare anche con     altri parametri fattibili. Se i parametri specificati, che possono essere scelti anche non tra quelli indicati in tabella, non permettono di generare una citt`a      valida, la simulazione deve terminare indicando la causa del problema nella generazione.
+  La Tabella 1 elenca valori “dense” e “large” per alcune configurazione di esempio da testare. Si tenga presente che il progetto deve poter funzionare anche con     altri parametri fattibili. Se i parametri specificati, che possono essere scelti anche non tra quelli indicati in tabella, non permettono di generare una città      valida, la simulazione deve terminare indicando la causa del problema nella generazione.
 
 
   Tabella 1: Esempio di valori di configurazione.
@@ -82,4 +82,4 @@ Le caratteristiche della cella di cui sopra sono generate casualmente all’atto
       • massimizzare il grado di concorrenza fra processi
       • deallocare le risorse IPC che sono state allocate dai processi al termine del gioco
       • essere compilato con almeno le seguenti opzioni di compilazione: gcc -std=c89 -pedantic
-      • poter eseguire correttamente su una macchina (virtuale o fisica) che presenta parallelismo (due o pi`u processori).
+      • poter eseguire correttamente su una macchina (virtuale o fisica) che presenta parallelismo (due o più processori).
